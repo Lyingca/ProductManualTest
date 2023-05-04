@@ -98,6 +98,8 @@ int main(void)
   //初始化数码管
   CH455G_Init(&hi2c1);
   CH455G_Init(&hi2c2);
+  //使能系统运行指示灯
+  HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */

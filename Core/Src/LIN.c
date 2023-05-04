@@ -147,6 +147,7 @@ void Send_LIN_Data()
 {
     if(LIN_Send_Flag)
     {
+        HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
         LIN_Tx_PID_Data(&huart1,pLINTxBuff,LIN_TX_MAXSIZE - 1,LIN_CK_ENHANCED);
         LIN_Send_Flag = DISABLE;
         LIN_Read_Flag = ENABLE;
@@ -170,12 +171,12 @@ void EXV_Loop_Execution(uint16_t cycles,uint16_t test_step,uint16_t reset_step)
         if (test_step)
         {
             step = 0;
+            cycles--;
         }
         else
         {
             step = reset_step;
         }
-        cycles--;
         Data_To_LIN(step,cycles,0);
     }
 }
@@ -199,10 +200,12 @@ void Feedback_Signal(uint8_t signal)
     {
         EXV_Loop_Execution(EXV_Test_Cycles,EXV_Test_Step,currentStepSize);
         //亮绿灯
+        //HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
     }
     else
     {
-        //亮红灯
+        //不亮绿灯
+        HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_RESET);
     }
 }
 
