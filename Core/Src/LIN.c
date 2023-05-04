@@ -3,6 +3,7 @@
 //
 
 #include "LIN.h"
+#include "CH455.h"
 #include "usart.h"
 #include <string.h>
 
@@ -15,6 +16,8 @@ uint8_t pLINRxBuff[LIN_RX_MAXSIZE];
 uint8_t pLINTxBuff[LIN_TX_MAXSIZE];
 //当前测试的电机步长
 uint16_t EXV_Test_Step;
+//当前测试的循环次数
+uint16_t EXV_Test_Cycles;
 //发送读取帧的标志位
 uint8_t LIN_Read_Flag = DISABLE;
 //发送写帧的标志位
@@ -105,16 +108,12 @@ void LIN_Tx_PID(UART_HandleTypeDef *huart, uint8_t PID)
     HAL_UART_Transmit(huart,&PID,1,HAL_MAX_DELAY);
 }
 
-void Data_To_LIN(uint16_t step,uint8_t init_enable)
+void Data_To_LIN(uint16_t step,uint16_t cycles,uint8_t init_enable)
 {
-    LIN_Send_Flag = DISABLE;
     uint8_t index = 0;
     EXV_Test_Step = step;
-    //校验测试步长
-    if(EXV_Test_Step > MAX_STEP)
-    {
-        EXV_Test_Step = MAX_STEP;
-    }
+    EXV_Test_Cycles = cycles;
+
     pLINTxBuff[index++] = LIN_PID_52_0x34;
     pLINTxBuff[index++] = step & 0xFF;
     pLINTxBuff[index++] = step >> 8;
@@ -161,12 +160,57 @@ void Send_LIN_Data()
 }
 
 /**
+ * 循环执行命令
+ */
+void EXV_Loop_Execution(uint16_t cycles,uint16_t test_step,uint16_t reset_step)
+{
+    if (cycles)
+    {
+        int step = 0;
+        if (test_step)
+        {
+            step = 0;
+        }
+        else
+        {
+            step = reset_step;
+        }
+        cycles--;
+        Data_To_LIN(step,cycles,0);
+    }
+}
+
+/**
+ * 反馈电机信号
+ * @param signal
+ */
+void Feedback_Signal(uint8_t signal)
+{
+    //读取标志位置为不发送读取数据帧
+    LIN_Read_Flag = DISABLE;
+    //发送标志置为不发送写数据帧
+    LIN_Send_Flag = DISABLE;
+    //重置重试计数器为0
+    retries = 0;
+    //发送响应数据后表示本次测试结束，清空发送数据缓存
+    memset(pLINTxBuff,0,LIN_TX_MAXSIZE);
+
+    if (signal)
+    {
+        EXV_Loop_Execution(EXV_Test_Cycles,EXV_Test_Step,currentStepSize);
+        //亮绿灯
+    }
+    else
+    {
+        //亮红灯
+    }
+}
+
+/**
  * 数据处理函数
  */
 void LIN_Data_Process()
 {
-    //响应数组
-    uint8_t RS232_Resp_Result[2] = {0};
     //电机转动步长
     uint16_t EXV_Run_Step = 0;
     //通过校验位-校验数据
@@ -182,7 +226,7 @@ void LIN_Data_Process()
     //校验LIN通信故障反馈
     if((pLINRxBuff[3] & EXV_F_RESP_COMP) == EXV_F_RESP_ERROR)
     {
-
+        Feedback_Signal(EXV_ERROR);
     }
         //检查初始化状态，解决反馈数据中以E2，E3开始的数据帧
     else if((pLINRxBuff[3] & EXV_ST_INIT_COMP) == EXV_ST_INIT_NOT || (pLINRxBuff[3] & EXV_ST_INIT_COMP) == EXV_ST_INIT_PROCESS)
@@ -196,16 +240,16 @@ void LIN_Data_Process()
         switch(fault_index)
         {
             case EXV_ST_FAULT_SHORTED:
-
+                Feedback_Signal(EXV_ERROR);
                 break;
             case EXV_ST_FAULT_OPENLOAD:
-
+                Feedback_Signal(EXV_ERROR);
                 break;
             case EXV_ST_FAULT_OVERTEMP:
-
+                Feedback_Signal(EXV_ERROR);
                 break;
             case EXV_ST_FAULT_ACTUATORFAULT:
-
+                Feedback_Signal(EXV_ERROR);
                 break;
         }
     }
@@ -216,17 +260,17 @@ void LIN_Data_Process()
         switch(voltage_index)
         {
             case EXV_ST_VOLTAGE_OVER:
-
+                Feedback_Signal(EXV_ERROR);
                 break;
             case EXV_ST_VOLTAGE_UNDER:
-
+                Feedback_Signal(EXV_ERROR);
                 break;
         }
     }
         //校验温度状态
     else if((pLINRxBuff[4] & EXV_OVERTEMP_COMP) == EXV_OVERTEMP_OVER)
     {
-
+        Feedback_Signal(EXV_ERROR);
     }
         //电机停止转动
     else if((pLINRxBuff[3] & EXV_ST_RUN_COMP) == EXV_ST_RUN_NOT_MOVE)
@@ -235,17 +279,17 @@ void LIN_Data_Process()
         EXV_Run_Step = (pLINRxBuff[6] << 8) | pLINRxBuff[5];
         if(EXV_Run_Step == EXV_Test_Step)
         {
-
+            Feedback_Signal(EXV_OK);
         }
-            //重试3次发送电机运动使能
+        //重试10次发送电机运动使能
         else
         {
             LIN_Send_Flag = ENABLE;
             retries++;
-            //当3次电机运动使能后，电机转动步长与测试步长不一致，发送错误信息
+            //当10次电机运动使能后，电机转动步长与测试步长不一致，发送错误信息
             if(retries > MAX_RETRY_NUM)
             {
-
+                Feedback_Signal(EXV_ERROR);
             }
         }
     }

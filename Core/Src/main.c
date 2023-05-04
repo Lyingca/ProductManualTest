@@ -84,8 +84,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  //开启中断接收
-  Util_Receive_IT(&huart1);
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -94,7 +93,11 @@ int main(void)
   MX_I2C2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  //开启中断接收
+  Util_Receive_IT(&huart1);
+  //初始化数码管
+  CH455G_Init(&hi2c1);
+  CH455G_Init(&hi2c2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,18 +106,22 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-    Operation_Key_Scan(Step_Add_GPIO_Port,Step_Add_Pin,1,STEP_DIGITAL_TUBE_NUM);
-    Operation_Key_Scan(Step_Sub_GPIO_Port,Step_Sub_Pin,-1,STEP_DIGITAL_TUBE_NUM);
-    Operation_Key_Scan(Loop_Add_GPIO_Port,Loop_Add_Pin,1,LOOP_DIGITAL_TUBE_NUM);
-    Operation_Key_Scan(Loop_Sub_GPIO_Port,Loop_Sub_Pin,-1,LOOP_DIGITAL_TUBE_NUM);
+    //检测加减按键
+    Operation_Key_Scan(Step_Add_GPIO_Port,Step_Add_Pin,1,STEP_DIGITAL_TUBE);
+    Operation_Key_Scan(Step_Sub_GPIO_Port,Step_Sub_Pin,0,STEP_DIGITAL_TUBE);
+    Operation_Key_Scan(Loop_Add_GPIO_Port,Loop_Add_Pin,1,LOOP_DIGITAL_TUBE);
+    Operation_Key_Scan(Loop_Sub_GPIO_Port,Loop_Sub_Pin,0,LOOP_DIGITAL_TUBE);
+    //检测初始化按钮
     if (General_Key_Scan(Init_Key_GPIO_Port,Init_Key_Pin))
     {
-        Data_To_LIN(0,1);
+        Data_To_LIN(0,0,1);
     }
+    //检测开始按钮
     if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
     {
-        Data_To_LIN(200,0);
+        Data_To_LIN(currentStepSize,currentCycleCount,0);
     }
+    //检测结束按钮
     if (General_Key_Scan(Finished_Key_GPIO_Port,Finished_Key_Pin))
     {
         Finished_LIN(DISABLE,DISABLE);
@@ -195,7 +202,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     if(huart == &huart1)
     {
         LIN_Data_Process();
-        //HAL_UART_AbortReceive(&huart2);
     }
     Util_Receive_IT(huart);
 }

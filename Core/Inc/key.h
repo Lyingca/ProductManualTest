@@ -6,8 +6,6 @@
 #define PRODUCTMANUALTEST_KEY_H
 
 #include "main.h"
-#include "LIN.h"
-#include "CH455.h"
 
 /** 按键按下标置宏
  * 按键按下为高电平，设置 KEY_ON=1， KEY_OFF=0
@@ -17,6 +15,6 @@
 #define KEY_OFF   0
 
 uint8_t General_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin);
-void Operation_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin,uint8_t step,uint8_t NixieTube_Number);
+void Operation_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin,uint8_t step,I2C_HandleTypeDef *hi2c);
 
 #endif //PRODUCTMANUALTEST_KEY_H

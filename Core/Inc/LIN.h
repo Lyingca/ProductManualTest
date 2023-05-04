@@ -19,6 +19,10 @@
 #define MAX_RETRY_NUM 10
 //最大步长
 #define MAX_STEP 480
+//电机错误信号
+#define EXV_ERROR   0
+//电机正确信号
+#define EXV_OK   1
 
 extern uint8_t pLINRxBuff[LIN_RX_MAXSIZE];
 
@@ -158,7 +162,7 @@ typedef enum
     EXV_OVERTEMP_COMP = 0xC0
 }EXV_St_Comp;
 
-void Data_To_LIN(uint16_t step,uint8_t init_enable);
+void Data_To_LIN(uint16_t step,uint16_t cycles,uint8_t init_enable);
 void Finished_LIN(uint8_t send,uint8_t read);
 void Send_LIN_Data();
 void LIN_Data_Process();
