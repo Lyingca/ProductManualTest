@@ -147,7 +147,6 @@ void Send_LIN_Data()
 {
     if(LIN_Send_Flag)
     {
-        HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
         LIN_Tx_PID_Data(&huart1,pLINTxBuff,LIN_TX_MAXSIZE - 1,LIN_CK_ENHANCED);
         LIN_Send_Flag = DISABLE;
         LIN_Read_Flag = ENABLE;
@@ -199,8 +198,6 @@ void Feedback_Signal(uint8_t signal)
     if (signal)
     {
         EXV_Loop_Execution(EXV_Test_Cycles,EXV_Test_Step,currentStepSize);
-        //亮绿灯
-        //HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
     }
     else
     {

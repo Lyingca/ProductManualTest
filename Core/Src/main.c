@@ -100,6 +100,8 @@ int main(void)
   CH455G_Init(&hi2c2);
   //使能系统运行指示灯
   HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
+  //电机正常工作指示灯
+  HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
