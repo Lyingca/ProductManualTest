@@ -147,14 +147,14 @@ void Send_LIN_Data()
 {
     if(LIN_Send_Flag)
     {
-        LIN_Tx_PID_Data(&huart1,pLINTxBuff,LIN_TX_MAXSIZE - 1,LIN_CK_ENHANCED);
+        LIN_Tx_PID_Data(&huart2,pLINTxBuff,LIN_TX_MAXSIZE - 1,LIN_CK_ENHANCED);
         LIN_Send_Flag = DISABLE;
         LIN_Read_Flag = ENABLE;
         HAL_Delay(20);
     }
     if(LIN_Read_Flag)
     {
-        LIN_Tx_PID(&huart1, LIN_PID_53_0x35);
+        LIN_Tx_PID(&huart2, LIN_PID_53_0x35);
         HAL_Delay(100);
     }
 }
