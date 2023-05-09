@@ -91,15 +91,25 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_I2C2_Init();
-  MX_USART1_UART_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   //开启中断接收
-  Util_Receive_IT(&huart1);
+  Util_Receive_IT(&huart2);
   //初始化数码管
   CH455G_Init(&hi2c1);
   CH455G_Init(&hi2c2);
   //使能系统运行指示灯
   HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
+  //电机正常工作指示灯
+  HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
+
+  //测试
+  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);
+  currentStepSize = 180;
+  currentCycleCount = 0;
+  Data_To_LIN(currentStepSize,currentCycleCount,0);
+  //测试
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -182,7 +192,7 @@ void SystemClock_Config(void)
  */
 void Util_Receive_IT(UART_HandleTypeDef *huart)
 {
-    if(huart == &huart1)
+    if(huart == &huart2)
     {
         if(HAL_UART_Receive_IT(huart, pLINRxBuff, LIN_RX_MAXSIZE) != HAL_OK)
         {
@@ -201,7 +211,7 @@ void Util_Receive_IT(UART_HandleTypeDef *huart)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     //LIN协议
-    if(huart == &huart1)
+    if(huart == &huart2)
     {
         LIN_Data_Process();
     }
