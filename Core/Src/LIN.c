@@ -24,6 +24,28 @@ uint8_t LIN_Read_Flag = DISABLE;
 uint8_t LIN_Send_Flag = DISABLE;
 //指令重复发送计数器
 uint8_t retries = 0;
+//保存LIN芯片的信息
+struct LIN_Chip_Msg
+{
+    //读PID
+    uint8_t read_PID;
+    //写PID
+    uint8_t write_PID;
+    //电机运动使能
+    uint8_t EXV_Move_Enable;
+    //初始化请求
+    uint8_t EXV_Init_Request;
+    //非初始化请求
+    uint8_t EXV_Not_Init_Request;
+};
+//初始化LIN芯片信息
+struct LIN_Chip_Msg chip[3] = {
+        {LIN_PID_53_0x35,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
+        {LIN_PID_55_0x37,LIN_PID_54_0x36,0xFF,0xFD,0xFC},
+        {LIN_PID_32_0x20,LIN_PID_16_0x10,0xFF,0xFD,0xFC}
+};
+//芯片编号
+uint8_t chip_Num = 0;
 
 /****************************************************************************************
 ** 函数名称: LINCheckSum----标准校验
@@ -114,17 +136,17 @@ void Data_To_LIN(uint16_t step,uint16_t cycles,uint8_t init_enable)
     EXV_Test_Step = step;
     EXV_Test_Cycles = cycles;
 
-    pLINTxBuff[index++] = LIN_PID_52_0x34;
+    pLINTxBuff[index++] = chip[chip_Num].write_PID;
     pLINTxBuff[index++] = step & 0xFF;
     pLINTxBuff[index++] = step >> 8;
-    pLINTxBuff[index++] = 0xFF;
+    pLINTxBuff[index++] = chip[chip_Num].EXV_Move_Enable;
     if(init_enable)
     {
-        pLINTxBuff[index++] = 0xFD;
+        pLINTxBuff[index++] = chip[chip_Num].EXV_Init_Request;
     }
     else
     {
-        pLINTxBuff[index++] = 0xFC;
+        pLINTxBuff[index++] = chip[chip_Num].EXV_Not_Init_Request;
     }
     //剩余的字节数有0xFF填充
     while(index < LIN_TX_MAXSIZE - 1)
@@ -155,7 +177,7 @@ void Send_LIN_Data()
     }
     if(LIN_Read_Flag)
     {
-        LIN_Tx_PID(&huart1, LIN_PID_53_0x35);
+        LIN_Tx_PID(&huart1, chip[chip_Num].read_PID);
         HAL_Delay(100);
     }
 }
@@ -210,6 +232,27 @@ void Feedback_Signal(uint8_t signal)
 }
 
 /**
+ * 检查电机与测试板之间的连接是否正常
+ * result：0 - false，1 - true
+ */
+uint8_t Check_Chip_Connection()
+{
+    uint8_t i = 0, count = 0;
+    for(i = 0;i < LIN_RX_MAXSIZE;i++)
+    {
+        if (pLINRxBuff[i] == chip[chip_Num].read_PID)
+        {
+            count++;
+        }
+    }
+    if (count >= 2)
+    {
+        return 0;
+    }
+    return 1;
+}
+
+/**
  * 数据处理函数
  */
 void LIN_Data_Process()
@@ -220,6 +263,11 @@ void LIN_Data_Process()
     uint8_t ckm = 0;
     //pLINRxBuff + 2表示从接收的第3个数据开始，因为接收数组第1个是同步间隔段，第2个是同步段（0x55）
     ckm = LIN_Check_Sum_En(pLINRxBuff + 2,LIN_CHECK_EN_NUM);
+    //检查电机与测试板之间的连接是否正常
+    if (!Check_Chip_Connection())
+    {
+        Feedback_Signal(EXV_ERROR);
+    }
     //如果校验不通过，丢弃这帧数据
     if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == LIN_PID_52_0x34)
     {
