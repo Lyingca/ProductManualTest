@@ -61,6 +61,10 @@ void Error_Handler(void);
 #define LED_EXV_GPIO_Port GPIOC
 #define LED_System_Pin GPIO_PIN_2
 #define LED_System_GPIO_Port GPIOC
+#define TJA1028_EN_Pin GPIO_PIN_4
+#define TJA1028_EN_GPIO_Port GPIOA
+#define TJA1028_RSTN_Pin GPIO_PIN_5
+#define TJA1028_RSTN_GPIO_Port GPIOA
 #define Finished_Key_Pin GPIO_PIN_5
 #define Finished_Key_GPIO_Port GPIOD
 #define Init_Key_Pin GPIO_PIN_3

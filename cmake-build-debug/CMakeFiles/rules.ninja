@@ -17,7 +17,7 @@
 rule ASM_COMPILER__ProductManualTest.2eelf_Debug
   depfile = $DEP_FILE
   deps = gcc
-  command = D:\gcc-arm-none-eabi-10.3-2021.10\bin\arm-none-eabi-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = D:\STMicroelectronics\STM32Cube\GNU-Tools-ARM-Embedded\bin\arm-none-eabi-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -27,7 +27,7 @@ rule ASM_COMPILER__ProductManualTest.2eelf_Debug
 rule C_COMPILER__ProductManualTest.2eelf_Debug
   depfile = $DEP_FILE
   deps = gcc
-  command = D:\gcc-arm-none-eabi-10.3-2021.10\bin\arm-none-eabi-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = D:\STMicroelectronics\STM32Cube\GNU-Tools-ARM-Embedded\bin\arm-none-eabi-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -35,7 +35,7 @@ rule C_COMPILER__ProductManualTest.2eelf_Debug
 # Rule for linking C executable.
 
 rule C_EXECUTABLE_LINKER__ProductManualTest.2eelf_Debug
-  command = cmd.exe /C "$PRE_LINK && D:\gcc-arm-none-eabi-10.3-2021.10\bin\arm-none-eabi-gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
+  command = cmd.exe /C "$PRE_LINK && D:\STMicroelectronics\STM32Cube\GNU-Tools-ARM-Embedded\bin\arm-none-eabi-gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking C executable $TARGET_FILE
   restat = $RESTAT
 

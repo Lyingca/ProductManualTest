@@ -102,9 +102,12 @@ int main(void)
   HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
   //电机正常工作指示灯
   HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
+  //使能TJA1028LIN芯片的EN
+  HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port,TJA1028_EN_Pin,GPIO_PIN_SET);
+  //使能TJA1028LIN芯片的RSTN
+  HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port,TJA1028_RSTN_Pin,GPIO_PIN_SET);
 
   //测试
-  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);
   currentStepSize = 180;
   currentCycleCount = 0;
   Data_To_LIN(currentStepSize,currentCycleCount,0);
