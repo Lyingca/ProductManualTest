@@ -266,22 +266,22 @@ void LIN_Data_Process()
         Feedback_Signal(EXV_ERROR);
     }
     //如果校验不通过，丢弃这帧数据
-    if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == LIN_PID_52_0x34)
+    else if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == LIN_PID_52_0x34)
     {
-        return;
+        //不需要操作
     }
     //解析数据具有优先级：LIN通信故障->电机故障->电压异常->温度异常->电机停止标志->判断步长
     //校验LIN通信故障反馈
-    if((pLINRxBuff[3] & EXV_F_RESP_COMP) == EXV_F_RESP_ERROR)
+    else if((pLINRxBuff[3] & EXV_F_RESP_COMP) == EXV_F_RESP_ERROR)
     {
         Feedback_Signal(EXV_ERROR);
     }
         //检查初始化状态，解决反馈数据中以E2，E3开始的数据帧
     else if((pLINRxBuff[3] & EXV_ST_INIT_COMP) == EXV_ST_INIT_NOT || (pLINRxBuff[3] & EXV_ST_INIT_COMP) == EXV_ST_INIT_PROCESS)
     {
-        return;
+        //不需要操作
     }
-        //校验故障状态
+    //校验故障状态
     else if((pLINRxBuff[4] & EXV_ST_FAULT_COMP) > 0)
     {
         uint8_t fault_index = pLINRxBuff[4] & EXV_ST_FAULT_COMP;
@@ -301,7 +301,7 @@ void LIN_Data_Process()
                 break;
         }
     }
-        //校验电压状态
+    //校验电压状态
     else if((pLINRxBuff[4] & EXV_ST_VOLTAGE_COMP) > 0)
     {
         uint8_t voltage_index = pLINRxBuff[4] & EXV_ST_VOLTAGE_COMP;
@@ -315,12 +315,12 @@ void LIN_Data_Process()
                 break;
         }
     }
-        //校验温度状态
+    //校验温度状态
     else if((pLINRxBuff[4] & EXV_OVERTEMP_COMP) == EXV_OVERTEMP_OVER)
     {
         Feedback_Signal(EXV_ERROR);
     }
-        //电机停止转动
+    //电机停止转动
     else if((pLINRxBuff[3] & EXV_ST_RUN_COMP) == EXV_ST_RUN_NOT_MOVE)
     {
         //计算电机转动步长，步长低字节在前高字节在后
