@@ -108,9 +108,9 @@ int main(void)
   HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port,TJA1028_RSTN_Pin,GPIO_PIN_SET);
 
   //测试
-  currentStepSize = 180;
-  currentCycleCount = 0;
-  Data_To_LIN(currentStepSize,currentCycleCount,0);
+//  currentStepSize = 480;
+//  currentCycleCount = 300;
+//  Data_To_LIN(currentStepSize,currentCycleCount,0);
   //测试
 
   /* USER CODE END 2 */
@@ -236,9 +236,9 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     {
         //清除ORE标志位
         __HAL_UART_FLUSH_DRREGISTER(huart);
+        Util_Receive_IT(huart);
         huart->ErrorCode = HAL_UART_ERROR_NONE;
     }
-    Util_Receive_IT(huart);
 }
 /* USER CODE END 4 */
 

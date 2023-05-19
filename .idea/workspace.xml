@@ -20,7 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="修改TJA1028的RSTN使能引脚为PB0" />
+    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart)调用的位置">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProductManualTest.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/ProductManualTest.ioc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,7 +74,12 @@
       <recent name="D:\JetBrains\CLionProjects\ProductManualTest" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.ProductManualTest">
+  <component name="RunManager" selected="OpenOCD Download &amp; Run.ProductManualTest">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProductManualTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProductManualTest" TARGET_NAME="ProductManualTest.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProductManualTest" RUN_TARGET_NAME="ProductManualTest.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -99,6 +112,7 @@
       <workItem from="1683617888775" duration="5193000" />
       <workItem from="1683676110603" duration="1049000" />
       <workItem from="1683680255572" duration="224000" />
+      <workItem from="1684461487199" duration="1046000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <created>1683159408102</created>
@@ -149,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683680467804</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart)调用的位置">
+      <created>1684460179422</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684460179422</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +200,7 @@
     <MESSAGE value="1.新增芯片选择&#10;2.新增电机与测试板之间的连接检测" />
     <MESSAGE value="添加TJA1028的RSTN使能引脚，重命名TJA1028的RSTN和EN使能引脚" />
     <MESSAGE value="修改TJA1028的RSTN使能引脚为PB0" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改TJA1028的RSTN使能引脚为PB0" />
+    <MESSAGE value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart)调用的位置" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart)调用的位置" />
   </component>
 </project>
