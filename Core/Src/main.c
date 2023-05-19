@@ -236,9 +236,9 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     {
         //清除ORE标志位
         __HAL_UART_FLUSH_DRREGISTER(huart);
-        Util_Receive_IT(huart);
         huart->ErrorCode = HAL_UART_ERROR_NONE;
     }
+    Util_Receive_IT(huart);
 }
 /* USER CODE END 4 */
 
