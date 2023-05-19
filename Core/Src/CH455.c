@@ -55,7 +55,7 @@ void CH455G_Display(uint16_t data, I2C_HandleTypeDef *hi2c)
     //发显示数据
     CH455G_Write( CH455_DIG0 | BCD_decode_tab[encode[0]] , hi2c);
     CH455G_Write( CH455_DIG1 | BCD_decode_tab[encode[1]] , hi2c);
-    CH455G_Write( CH455_DIG2 | BCD_decode_tab[encode[2]] | BCD_decode_DP, hi2c);
+    CH455G_Write( CH455_DIG2 | BCD_decode_tab[encode[2]] , hi2c);
     CH455G_Write( CH455_DIG3 | BCD_decode_tab[encode[3]] , hi2c);
 }
 
@@ -70,10 +70,6 @@ uint16_t CH455G_Update_Data(uint8_t step, I2C_HandleTypeDef *hi2c)
     uint16_t result = 0;
     if (hi2c == STEP_DIGITAL_TUBE)
     {
-        if (currentStepSize == 0 || currentStepSize == MAX_STEP)
-        {
-            return currentStepSize;
-        }
         if (step)
         {
             result = ++currentStepSize;
@@ -85,10 +81,6 @@ uint16_t CH455G_Update_Data(uint8_t step, I2C_HandleTypeDef *hi2c)
     }
     if (hi2c == LOOP_DIGITAL_TUBE)
     {
-        if (currentCycleCount == 0)
-        {
-            return currentCycleCount;
-        }
         if (step)
         {
             result = ++currentCycleCount;

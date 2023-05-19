@@ -106,6 +106,9 @@ int main(void)
   HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port,TJA1028_EN_Pin,GPIO_PIN_SET);
   //使能TJA1028LIN芯片的RSTN
   HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port,TJA1028_RSTN_Pin,GPIO_PIN_SET);
+  //初始化数码管显示0
+  CH455G_Display(0,&hi2c1);
+  CH455G_Display(0,&hi2c2);
 
   //测试
 //  currentStepSize = 480;
