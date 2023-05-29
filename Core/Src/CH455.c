@@ -52,8 +52,8 @@ void CH455G_Display(uint16_t data, I2C_HandleTypeDef *hi2c)
     encode[2] = (data % 100) / 10;
     encode[3] = data % 10;
 
-    //发显示数据
-    CH455G_Write( CH455_DIG0 | BCD_decode_tab[encode[0]] , hi2c);
+    //发显示数据(三位数码管）
+    //CH455G_Write( CH455_DIG0 | BCD_decode_tab[encode[0]] , hi2c);
     CH455G_Write( CH455_DIG1 | BCD_decode_tab[encode[1]] , hi2c);
     CH455G_Write( CH455_DIG2 | BCD_decode_tab[encode[2]] , hi2c);
     CH455G_Write( CH455_DIG3 | BCD_decode_tab[encode[3]] , hi2c);

@@ -84,7 +84,9 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+    //解决断电后重新上电，程序运行异常的问题
+    //原因：在程序刚开始时加上一个延时，因为外设上电时间不够，所以加个延时，等待外设上电，再进行初始化
+    HAL_Delay(700);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */

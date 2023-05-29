@@ -189,7 +189,7 @@ void EXV_Loop_Execution(uint16_t cycles,uint16_t test_step,uint16_t reset_step)
     if (cycles)
     {
         int step = 0;
-        if (test_step)
+        if (test_step == reset_step)
         {
             step = 0;
             cycles--;
