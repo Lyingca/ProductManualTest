@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
@@ -91,19 +92,22 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_I2C1_Init();
   MX_I2C2_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   //开启中断接收
   Util_Receive_IT(&huart2);
+  //禁用DMA半满接收中断
+  //__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
   //初始化数码管
   CH455G_Init(&hi2c1);
   CH455G_Init(&hi2c2);
   //使能系统运行指示灯
-  HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
   //电机正常工作指示灯
-  HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
   //使能TJA1028LIN芯片的EN
   HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port,TJA1028_EN_Pin,GPIO_PIN_SET);
   //使能TJA1028LIN芯片的RSTN
@@ -202,27 +206,28 @@ void Util_Receive_IT(UART_HandleTypeDef *huart)
 {
     if(huart == &huart2)
     {
-        if(HAL_UART_Receive_IT(huart, pLINRxBuff, LIN_RX_MAXSIZE) != HAL_OK)
+        //开启DMA传输UART空闲中断中接收的数据，并在接收到UART空闲中断后停止传输
+        //判断DMA接收是否正常启动
+        if(HAL_UARTEx_ReceiveToIdle_DMA(huart, pLINRxBuff, LIN_RX_MAXSIZE) != HAL_OK)
         {
-            Error_Handler();
+            //如果有错误的话,清空缓冲，置位一些标志，具体看函数内部
+            HAL_UART_AbortReceive(huart);
+            //重启DMA接收
+            HAL_UARTEx_ReceiveToIdle_DMA(huart, pLINRxBuff, LIN_RX_MAXSIZE);
         }
+        //禁用DMA半满接收中断
+        //__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
     }
 }
 
-/**
- * 接收完成中断函数，用以在一帧数据接收完成时，对数据进行处理
- *
- * @brief Rx Transfer completed callback.
- * @param huart UART handle.
- * @retval None
- */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
     //LIN协议
-    if(huart == &huart2)
+    if (huart == &huart2)
     {
-        LIN_Data_Process();
+        LIN_Data_Process(Size);
     }
+    //重启DMA接收
     Util_Receive_IT(huart);
 }
 

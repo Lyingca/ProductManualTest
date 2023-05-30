@@ -165,6 +165,6 @@ typedef enum
 void Data_To_LIN(uint16_t step,uint16_t cycles,uint8_t init_enable);
 void Finished_LIN(uint8_t send,uint8_t read);
 void Send_LIN_Data();
-void LIN_Data_Process();
+void LIN_Data_Process(uint8_t rxlen);
 
 #endif //PRODUCTMANUALTEST_LIN_H

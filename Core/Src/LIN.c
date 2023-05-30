@@ -229,30 +229,9 @@ void Feedback_Signal(uint8_t signal)
 }
 
 /**
- * 检查电机与测试板之间的连接是否正常
- * result：0 - false，1 - true
- */
-uint8_t Check_Chip_Connection()
-{
-    uint8_t i = 0, count = 0;
-    for(i = 0;i < LIN_RX_MAXSIZE;i++)
-    {
-        if (pLINRxBuff[i] == chip[chip_Num].read_PID)
-        {
-            count++;
-        }
-        if (count >= 3)
-        {
-            return 0;
-        }
-    }
-    return 1;
-}
-
-/**
  * 数据处理函数
  */
-void LIN_Data_Process()
+void LIN_Data_Process(uint8_t rxlen)
 {
     //电机转动步长
     uint16_t EXV_Run_Step = 0;
@@ -261,7 +240,7 @@ void LIN_Data_Process()
     //pLINRxBuff + 2表示从接收的第3个数据开始，因为接收数组第1个是同步间隔段，第2个是同步段（0x55）
     ckm = LIN_Check_Sum_En(pLINRxBuff + 2,LIN_CHECK_EN_NUM);
     //检查电机与测试板之间的连接是否正常
-    if (!Check_Chip_Connection())
+    if (rxlen != LIN_RX_MAXSIZE)
     {
         Feedback_Signal(EXV_ERROR);
     }
@@ -276,7 +255,7 @@ void LIN_Data_Process()
     {
         Feedback_Signal(EXV_ERROR);
     }
-        //检查初始化状态，解决反馈数据中以E2，E3开始的数据帧
+    //检查初始化状态，解决反馈数据中以E2，E3，F6开始的数据帧
     else if((pLINRxBuff[3] & EXV_ST_INIT_COMP) == EXV_ST_INIT_NOT || (pLINRxBuff[3] & EXV_ST_INIT_COMP) == EXV_ST_INIT_PROCESS)
     {
         //不需要操作
