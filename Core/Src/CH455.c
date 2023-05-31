@@ -72,10 +72,20 @@ uint16_t CH455G_Update_Data(uint8_t step, I2C_HandleTypeDef *hi2c)
     {
         if (step)
         {
+            if (currentStepSize == 999)
+            {
+                currentStepSize = 0;
+                return currentStepSize;
+            }
             result = ++currentStepSize;
         }
         else
         {
+            if (currentStepSize == 0)
+            {
+                currentStepSize = 999;
+                return currentStepSize;
+            }
             result = --currentStepSize;
         }
     }
@@ -83,10 +93,20 @@ uint16_t CH455G_Update_Data(uint8_t step, I2C_HandleTypeDef *hi2c)
     {
         if (step)
         {
+            if (currentCycleCount == 999)
+            {
+                currentCycleCount = 0;
+                return currentCycleCount;
+            }
             result = ++currentCycleCount;
         }
         else
         {
+            if (currentCycleCount == 0)
+            {
+                currentCycleCount = 999;
+                return currentCycleCount;
+            }
             result = --currentCycleCount;
         }
     }
