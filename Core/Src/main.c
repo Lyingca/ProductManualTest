@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -26,7 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "key.h"
 #include "LIN.h"
-#include "CH455.h"
+#include "12864.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +46,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t test_step = 0;
+uint16_t test_cycle = 0;
+uint8_t test_current_step = 0;
+uint16_t test_error = 900;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,26 +93,18 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_I2C1_Init();
-  MX_I2C2_Init();
   MX_USART2_UART_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   //开启中断接收
   Util_Receive_IT(&huart2);
-  //初始化数码管
-  CH455G_Init(&hi2c1);
-  CH455G_Init(&hi2c2);
   //使能系统运行指示灯
   HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
-  //电机正常工作指示灯
-  HAL_GPIO_WritePin(LED_EXV_GPIO_Port,LED_EXV_Pin,GPIO_PIN_SET);
   //使能TJA1028LIN芯片的EN
   HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port,TJA1028_EN_Pin,GPIO_PIN_SET);
   //使能TJA1028LIN芯片的RSTN
   HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port,TJA1028_RSTN_Pin,GPIO_PIN_SET);
-  //初始化数码管显示0
-  CH455G_Display(0,&hi2c1);
-  CH455G_Display(0,&hi2c2);
+  LCDInit();
 
   //测试
 //  currentStepSize = 480;
@@ -127,27 +121,34 @@ int main(void)
     /* USER CODE END WHILE */
 
     //检测加减按键
-    Operation_Key_Scan(Step_Add_GPIO_Port,Step_Add_Pin,1,STEP_DIGITAL_TUBE);
-    Operation_Key_Scan(Step_Sub_GPIO_Port,Step_Sub_Pin,0,STEP_DIGITAL_TUBE);
-    Operation_Key_Scan(Loop_Add_GPIO_Port,Loop_Add_Pin,1,LOOP_DIGITAL_TUBE);
-    Operation_Key_Scan(Loop_Sub_GPIO_Port,Loop_Sub_Pin,0,LOOP_DIGITAL_TUBE);
+    Operation_Key_Scan(Step_Add_GPIO_Port,Step_Add_Pin,1,STEP_DIGITAL);
+    Operation_Key_Scan(Step_Sub_GPIO_Port,Step_Sub_Pin,0,STEP_DIGITAL);
+    Operation_Key_Scan(Loop_Add_GPIO_Port,Loop_Add_Pin,1,LOOP_DIGITAL);
+    Operation_Key_Scan(Loop_Sub_GPIO_Port,Loop_Sub_Pin,0,LOOP_DIGITAL);
     //检测初始化按钮
-    if (General_Key_Scan(Init_Key_GPIO_Port,Init_Key_Pin))
-    {
-        Data_To_LIN(0,0,1);
-    }
+//    if (General_Key_Scan(Init_Key_GPIO_Port,Init_Key_Pin))
+//    {
+//        Data_To_LIN(0,0,1);
+//    }
     //检测开始按钮
-    if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
-    {
-        Data_To_LIN(currentStepSize,currentCycleCount,0);
-    }
+//    if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
+//    {
+//        Data_To_LIN(currentStepSize,currentCycleCount,0);
+//    }
     //检测结束按钮
-    if (General_Key_Scan(Finished_Key_GPIO_Port,Finished_Key_Pin))
-    {
-        Finished_LIN(DISABLE,DISABLE);
-    }
+//    if (General_Key_Scan(Finished_Key_GPIO_Port,Finished_Key_Pin))
+//    {
+//        Finished_LIN(DISABLE,DISABLE);
+//    }
     //循环发送数据
     Send_LIN_Data();
+    test_step++;
+    test_cycle++;
+    test_current_step++;
+    DisplayCharacter(FIRST_LINE + 5,test_step,3);
+    DisplayCharacter(SECOND_LINE + 5,test_cycle,5);
+    DisplayCharacter(THIRD_LINE + 5,test_current_step,3);
+    DisplayCharacter(FOURTH_LINE + 5,test_error,3);
 
     /* USER CODE BEGIN 3 */
   }

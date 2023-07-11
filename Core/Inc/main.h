@@ -57,14 +57,38 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_EXV_Pin GPIO_PIN_12
-#define LED_EXV_GPIO_Port GPIOC
 #define LED_System_Pin GPIO_PIN_2
 #define LED_System_GPIO_Port GPIOC
 #define TJA1028_EN_Pin GPIO_PIN_4
 #define TJA1028_EN_GPIO_Port GPIOA
 #define TJA1028_RSTN_Pin GPIO_PIN_0
 #define TJA1028_RSTN_GPIO_Port GPIOB
+#define LCD_RST_Pin GPIO_PIN_13
+#define LCD_RST_GPIO_Port GPIOB
+#define LCD_PSB_Pin GPIO_PIN_14
+#define LCD_PSB_GPIO_Port GPIOB
+#define LCD_D7_Pin GPIO_PIN_15
+#define LCD_D7_GPIO_Port GPIOB
+#define LCD_D6_Pin GPIO_PIN_8
+#define LCD_D6_GPIO_Port GPIOA
+#define LCD_D5_Pin GPIO_PIN_9
+#define LCD_D5_GPIO_Port GPIOA
+#define LCD_D4_Pin GPIO_PIN_6
+#define LCD_D4_GPIO_Port GPIOC
+#define LCD_D3_Pin GPIO_PIN_7
+#define LCD_D3_GPIO_Port GPIOC
+#define LCD_D2_Pin GPIO_PIN_8
+#define LCD_D2_GPIO_Port GPIOD
+#define LCD_D1_Pin GPIO_PIN_10
+#define LCD_D1_GPIO_Port GPIOA
+#define LCD_WR_Pin GPIO_PIN_15
+#define LCD_WR_GPIO_Port GPIOA
+#define LCD_RS_Pin GPIO_PIN_8
+#define LCD_RS_GPIO_Port GPIOC
+#define LCD_D0_Pin GPIO_PIN_0
+#define LCD_D0_GPIO_Port GPIOD
+#define LCD_E_Pin GPIO_PIN_1
+#define LCD_E_GPIO_Port GPIOD
 #define Finished_Key_Pin GPIO_PIN_5
 #define Finished_Key_GPIO_Port GPIOD
 #define Init_Key_Pin GPIO_PIN_3

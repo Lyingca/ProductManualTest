@@ -21,8 +21,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="采用DMA接收LIN从机响应的数据（目前还在调试中）">
+      <change afterPath="$PROJECT_DIR$/Core/Inc/12864.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Src/12864.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/CH455.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/CH455.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mxproject" beforeDir="false" afterPath="$PROJECT_DIR$/.mxproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/CH455.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/LIN.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/LIN.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/i2c.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/key.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/key.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/stm32g0xx_hal_conf.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/stm32g0xx_hal_conf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/usart.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/usart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/CH455.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/LIN.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/LIN.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/gpio.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/gpio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/i2c.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/key.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/key.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_i2c.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_i2c_ex.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_i2c.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_i2c.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_i2c_ex.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProductManualTest.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/ProductManualTest.ioc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +101,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.ProductManualTest">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProductManualTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProductManualTest" TARGET_NAME="ProductManualTest.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProductManualTest" RUN_TARGET_NAME="ProductManualTest.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -116,6 +152,16 @@
       <workItem from="1685285425708" duration="57000" />
       <workItem from="1685337283967" duration="4730000" />
       <workItem from="1685498648108" duration="929000" />
+      <workItem from="1686797900007" duration="951000" />
+      <workItem from="1687769465289" duration="792000" />
+      <workItem from="1687778143823" duration="596000" />
+      <workItem from="1688795719582" duration="849000" />
+      <workItem from="1688868616493" duration="24490000" />
+      <workItem from="1688897627054" duration="751000" />
+      <workItem from="1688967839789" duration="5593000" />
+      <workItem from="1688987580319" duration="2529000" />
+      <workItem from="1688992911808" duration="1596000" />
+      <workItem from="1689032331290" duration="15333000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <created>1683159408102</created>

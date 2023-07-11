@@ -51,34 +51,47 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, LED_EXV_Pin|LED_System_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LED_System_Pin|LCD_D4_Pin|LCD_D3_Pin|LCD_RS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port, TJA1028_EN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, TJA1028_EN_Pin|LCD_D6_Pin|LCD_D5_Pin|LCD_D1_Pin
+                          |LCD_WR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port, TJA1028_RSTN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, TJA1028_RSTN_Pin|LCD_RST_Pin|LCD_PSB_Pin|LCD_D7_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PCPin PCPin */
-  GPIO_InitStruct.Pin = LED_EXV_Pin|LED_System_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, LCD_D2_Pin|LCD_D0_Pin|LCD_E_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin */
+  GPIO_InitStruct.Pin = LED_System_Pin|LCD_D4_Pin|LCD_D3_Pin|LCD_RS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = TJA1028_EN_Pin;
+  /*Configure GPIO pins : PAPin PAPin PAPin PAPin
+                           PAPin */
+  GPIO_InitStruct.Pin = TJA1028_EN_Pin|LCD_D6_Pin|LCD_D5_Pin|LCD_D1_Pin
+                          |LCD_WR_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(TJA1028_EN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = TJA1028_RSTN_Pin;
+  /*Configure GPIO pins : PBPin PBPin PBPin PBPin */
+  GPIO_InitStruct.Pin = TJA1028_RSTN_Pin|LCD_RST_Pin|LCD_PSB_Pin|LCD_D7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(TJA1028_RSTN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PDPin PDPin PDPin */
+  GPIO_InitStruct.Pin = LCD_D2_Pin|LCD_D0_Pin|LCD_E_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = Finished_Key_Pin;

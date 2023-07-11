@@ -6,6 +6,7 @@
 #define PRODUCTMANUALTEST_LIN_H
 
 #include "main.h"
+#include "12864.h"
 
 //一个同步间隔段 + 1个同步字节（0x55） + PID（1个字节） + （数据帧 （8个字节）  +  校验和（1个字节））
 #define LIN_RX_MAXSIZE 12
@@ -19,10 +20,6 @@
 #define MAX_RETRY_NUM 10
 //最大步长
 #define MAX_STEP 480
-//电机错误信号
-#define EXV_ERROR   0
-//电机正确信号
-#define EXV_OK   1
 
 extern uint8_t pLINRxBuff[LIN_RX_MAXSIZE];
 
@@ -161,6 +158,21 @@ typedef enum
     EXV_ST_VOLTAGE_COMP = 0x30,
     EXV_OVERTEMP_COMP = 0xC0
 }EXV_St_Comp;
+
+typedef enum
+{
+    EXV_RESP_OK = 0x384,
+    EXV_RESP_ERROR = 0x38D,
+    EXV_RESP_LIN_COMM_ERROR = 0x385,
+    EXV_RESP_MC_SHORT = 0x386,
+    EXV_RESP_MC_LOADOPEN = 0x387,
+    EXV_RESP_SHUTDOWN = 0x388,
+    EXV_RESP_ACTUATOR_FAULT = 0x389,
+    EXV_RESP_OVER_VOLTAGE = 0x38A,
+    EXV_RESP_UNDER_VOLTAGE = 0x38B,
+    EXV_RESP_OVERTEMP = 0x38C,
+    EXV_RESP_CHIP_ERROR = 0x38E
+}EXV_Resp_Rsult;
 
 void Data_To_LIN(uint16_t step,uint16_t cycles,uint8_t init_enable);
 void Finished_LIN(uint8_t send,uint8_t read);

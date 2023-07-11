@@ -3,7 +3,13 @@
 //
 
 #include "key.h"
-#include "CH455.h"
+
+//当前步长
+uint16_t currentStepSize;
+//当前循环次数
+uint16_t currentCycleCount;
+
+void Update_Data(uint8_t step, uint8_t step_loop);
 
 /**
  * 普通按键的检测
@@ -32,7 +38,7 @@ uint8_t General_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin)
  * @param GPIO_Pin
  * @param Number_Of_Symbols
  */
-void Operation_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin,uint8_t step, I2C_HandleTypeDef *hi2c)
+void Operation_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin,uint8_t step,uint8_t step_loop)
 {
     /*检测是否有按键按下 */
     if (HAL_GPIO_ReadPin(GPIOx,GPIO_Pin) == KEY_ON )
@@ -40,12 +46,51 @@ void Operation_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin,uint8_t step, I2C
         /*等待按键释放 */
         while (HAL_GPIO_ReadPin(GPIOx,GPIO_Pin) == KEY_ON)
         {
-            //长按运算按键时，数码管累加或者累减1
-            uint16_t data = CH455G_Update_Data(step, hi2c);
-            //数码管显示数据
-            CH455G_Display(data,hi2c);
+            Update_Data(step,step_loop);
             //延迟100ms,再次检测
             HAL_Delay(100);
         }
+    }
+}
+
+/**
+ * 更新LED的数字
+ * @param step
+ * @param hi2c
+ * @return
+ */
+void Update_Data(uint8_t step, uint8_t step_loop)
+{
+    if (step_loop == STEP_DIGITAL)
+    {
+        if (step)
+        {
+            if (currentStepSize == 999)
+            {
+                currentStepSize = 0;
+            }
+            ++currentStepSize;
+        }
+        else
+        {
+            if (currentStepSize == 0)
+            {
+                currentStepSize = 999;
+            }
+            --currentStepSize;
+        }
+        DisplayCharacter(FIRST_LINE + 5,currentStepSize,3);
+    }
+    if (step_loop == LOOP_DIGITAL)
+    {
+        if (step)
+        {
+            ++currentCycleCount;
+        }
+        else
+        {
+            --currentCycleCount;
+        }
+        DisplayCharacter(SECOND_LINE + 3,currentCycleCount,5);
     }
 }
