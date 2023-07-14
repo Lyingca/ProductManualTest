@@ -126,29 +126,32 @@ int main(void)
     Operation_Key_Scan(Loop_Add_GPIO_Port,Loop_Add_Pin,1,LOOP_DIGITAL);
     Operation_Key_Scan(Loop_Sub_GPIO_Port,Loop_Sub_Pin,0,LOOP_DIGITAL);
     //检测初始化按钮
-//    if (General_Key_Scan(Init_Key_GPIO_Port,Init_Key_Pin))
-//    {
-//        Data_To_LIN(0,0,1);
-//    }
+    if (General_Key_Scan(Init_Key_GPIO_Port,Init_Key_Pin))
+    {
+        Data_To_LIN(0,0,1);
+    }
     //检测开始按钮
-//    if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
-//    {
-//        Data_To_LIN(currentStepSize,currentCycleCount,0);
-//    }
+    if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
+    {
+        Data_To_LIN(currentStepSize,currentCycleCount,0);
+    }
     //检测结束按钮
-//    if (General_Key_Scan(Finished_Key_GPIO_Port,Finished_Key_Pin))
-//    {
-//        Finished_LIN(DISABLE,DISABLE);
-//    }
+    if (General_Key_Scan(Finished_Key_GPIO_Port,Finished_Key_Pin))
+    {
+        Finished_LIN(DISABLE,DISABLE);
+    }
     //循环发送数据
     Send_LIN_Data();
-    test_step++;
-    test_cycle++;
-    test_current_step++;
-    DisplayCharacter(FIRST_LINE + 5,test_step,3);
-    DisplayCharacter(SECOND_LINE + 5,test_cycle,5);
-    DisplayCharacter(THIRD_LINE + 5,test_current_step,3);
-    DisplayCharacter(FOURTH_LINE + 5,test_error,3);
+
+    //测试代码-start
+//    test_step++;
+//    test_cycle++;
+//    test_current_step++;
+//    DisplayCharacter(FIRST_LINE + 5,test_step,3);
+//    DisplayCharacter(SECOND_LINE + 5,test_cycle,5);
+//    DisplayCharacter(THIRD_LINE + 5,test_current_step,3);
+//    DisplayCharacter(FOURTH_LINE + 5,test_error,3);
+    //测试代码-end
 
     /* USER CODE BEGIN 3 */
   }

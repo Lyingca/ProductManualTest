@@ -20,40 +20,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="采用DMA接收LIN从机响应的数据（目前还在调试中）">
-      <change afterPath="$PROJECT_DIR$/Core/Inc/12864.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Core/Src/12864.c" afterDir="false" />
+    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="调整代码，改为12864液晶显示屏显示数据">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mxproject" beforeDir="false" afterPath="$PROJECT_DIR$/.mxproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/CH455.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/LIN.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/LIN.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/i2c.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/key.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/key.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/stm32g0xx_hal_conf.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/stm32g0xx_hal_conf.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/usart.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/usart.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/CH455.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/LIN.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/LIN.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/12864.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/12864.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/gpio.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/gpio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/i2c.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/key.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/key.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_i2c.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_i2c_ex.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_i2c.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_i2c.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_i2c_ex.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ProductManualTest.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/ProductManualTest.ioc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,35 +54,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/JetBrains/CLionProjects/ProductManualTest&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "D:/JetBrains/CLionProjects/ProductManualTest",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "File.Encoding",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\JetBrains\CLionProjects\ProductManualTest" />
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.ProductManualTest">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="ProductManualTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProductManualTest" TARGET_NAME="ProductManualTest.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProductManualTest" RUN_TARGET_NAME="ProductManualTest.elf">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductManualTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProductManualTest" TARGET_NAME="ProductManualTest.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProductManualTest" RUN_TARGET_NAME="ProductManualTest.elf">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -161,7 +137,10 @@
       <workItem from="1688967839789" duration="5593000" />
       <workItem from="1688987580319" duration="2529000" />
       <workItem from="1688992911808" duration="1596000" />
-      <workItem from="1689032331290" duration="15333000" />
+      <workItem from="1689032331290" duration="16840000" />
+      <workItem from="1689123446892" duration="3313000" />
+      <workItem from="1689316957273" duration="721000" />
+      <workItem from="1689329050076" duration="6351000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <created>1683159408102</created>
@@ -226,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684462623756</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="调整代码，改为12864液晶显示屏显示数据">
+      <created>1689065319408</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1689065319408</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +256,7 @@
     <MESSAGE value="修改TJA1028的RSTN使能引脚为PB0" />
     <MESSAGE value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart)调用的位置" />
     <MESSAGE value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart调用的位置，会导致程序异常，恢复Util_Receive_IT(huart)的位置" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart调用的位置，会导致程序异常，恢复Util_Receive_IT(huart)的位置" />
+    <MESSAGE value="调整代码，改为12864液晶显示屏显示数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="调整代码，改为12864液晶显示屏显示数据" />
   </component>
 </project>

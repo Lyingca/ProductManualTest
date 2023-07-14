@@ -36,13 +36,19 @@
 //NC
 #define LCD_RST_L		HAL_GPIO_WritePin(LCD_RST_GPIO_Port,LCD_RST_Pin,GPIO_PIN_RESET)	//	(对应显示屏的第17脚)
 
-uint8_t step_init[] = "目标步数：0";
-uint8_t cycle_init[] = "循环次数：0";
-uint8_t current_step_init[] = "当前步数：0";
-uint8_t error_code[] = "错误码：";
+/*
+ * uint8_t step_init[] = "目标步数：0";这种方式会有问题，因为项目采用UTF-8编码，所以汉字占3个字节
+ * 而显示屏使用的是GB2312的汉字编码，一个汉字占2个字节，所以程序在下载到芯片中后，显示屏现实的是乱码
+ * 最终采用硬编码的形式，将文字对应的16进制放到数组中
+ * 或者将项目编码方式改成GB2312
+ */
+uint8_t step_init[] = {0xc4, 0xbf, 0xb1, 0xea, 0xb2, 0xbd, 0xca, 0xfd, 0xa3, 0xba, 0x30};
+uint8_t cycle_init[] = {0xd1, 0xad, 0xbb, 0xb7, 0xb4, 0xce, 0xca, 0xfd, 0xa3, 0xba, 0x30};
+uint8_t current_step_init[] = {0xb5, 0xb1, 0xc7, 0xb0, 0xb2, 0xbd, 0xca, 0xfd, 0xa3, 0xba, 0x30};
+uint8_t error_code[] = {0xb4, 0xed, 0xce, 0xf3, 0xc2, 0xeb, 0xa3, 0xba};
 
 //因为字节的位是乱的，用到这个函数
-void PORT_Assignment(unsigned char WriteData)
+void PORT_Assignment(uint8_t WriteData)
 {
     if (WriteData & 0x01)  LCD_D0_H;	else	LCD_D0_L;
     if (WriteData & 0x02)  LCD_D1_H;    else	LCD_D1_L;
@@ -102,10 +108,11 @@ void DisplayChineseCharacter(uint8_t addr,uint8_t *character,uint8_t count)
 {
     uint8_t i;
     WRCommand_M68(addr);	//设定DDRAM地址
+    HAL_Delay(5);
     for(i = 0;i < count;i++)
     {
-        WRData_M68(character[i]);
-        HAL_Delay(50);
+        WRData_M68(*(character + i));
+        HAL_Delay(5);
     }
 }
 
@@ -123,9 +130,10 @@ void DisplayCharacter(uint8_t addr,uint16_t character,uint8_t count)
          num[index--] = digital;
     }
     WRCommand_M68(addr);	//设定DDRAM地址
+    HAL_Delay(5);
     for (int j = 8 - count; j < 8; ++j) {
         WRData_M68(0x30 + num[j]);
-        HAL_Delay(50);
+        HAL_Delay(5);
     }
 }
 
@@ -150,12 +158,12 @@ void LCDInit(void)
     WRCommand_M68(0x02);//地址归零
     HAL_Delay(1);
 
-//    uint8_t size = strlen(step_init);
-//    DisplayChineseCharacter(0x80,step_init,size);
-//    size = strlen(cycle_init);
-//    DisplayChineseCharacter(0x90,cycle_init,size);
-//    size = strlen(current_step_init);
-//    DisplayChineseCharacter(0x88,current_step_init,size);
-//    size = strlen(error_code);
-//    DisplayChineseCharacter(0x98,error_code,size);
+    uint8_t size = sizeof(step_init) / sizeof(uint8_t);
+    DisplayChineseCharacter(0x80,step_init,size);
+    size = sizeof(cycle_init) / sizeof(uint8_t);
+    DisplayChineseCharacter(0x90,cycle_init,size);
+    size = sizeof(current_step_init) / sizeof(uint8_t);
+    DisplayChineseCharacter(0x88,current_step_init,size);
+    size = sizeof(error_code) / sizeof(uint8_t);
+    DisplayChineseCharacter(0x98,error_code,size);
 }
