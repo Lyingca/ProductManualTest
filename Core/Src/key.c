@@ -48,7 +48,7 @@ void Operation_Key_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin,uint8_t step,uint
         {
             Update_Data(step,step_loop);
             //延迟100ms,再次检测
-            HAL_Delay(100);
+            HAL_Delay(50);
         }
     }
 }
@@ -91,6 +91,6 @@ void Update_Data(uint8_t step, uint8_t step_loop)
         {
             --currentCycleCount;
         }
-        DisplayCharacter(SECOND_LINE + 3,currentCycleCount,5);
+        DisplayCharacter(SECOND_LINE + 5,currentCycleCount,5);
     }
 }

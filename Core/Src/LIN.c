@@ -169,14 +169,13 @@ void Send_LIN_Data()
     if(LIN_Send_Flag)
     {
         LIN_Tx_PID_Data(&huart2,pLINTxBuff,LIN_TX_MAXSIZE - 1,LIN_CK_ENHANCED);
-        LIN_Send_Flag = DISABLE;
         LIN_Read_Flag = ENABLE;
-        HAL_Delay(50);
+        HAL_Delay(20);
     }
     if(LIN_Read_Flag)
     {
         LIN_Tx_PID(&huart2, chip[chip_Num].read_PID);
-        HAL_Delay(200);
+        HAL_Delay(20);
     }
 }
 
@@ -191,14 +190,15 @@ void EXV_Loop_Execution(uint16_t cycles,uint16_t test_step,uint16_t reset_step)
         if (test_step == reset_step)
         {
             step = 0;
-            cycles--;
-            DisplayCharacter(SECOND_LINE + 3,cycles,5);
+//            cycles--;
+            currentCycleCount--;
+            DisplayCharacter(SECOND_LINE + 5,currentCycleCount,5);
         }
         else
         {
             step = reset_step;
         }
-        Data_To_LIN(step,cycles,0);
+        Data_To_LIN(step,currentCycleCount,0);
     }
 }
 
@@ -209,7 +209,7 @@ void EXV_Loop_Execution(uint16_t cycles,uint16_t test_step,uint16_t reset_step)
 void Feedback_Signal(uint16_t signal)
 {
     //发送响应数据后表示本次测试结束，清空发送数据缓存
-    memset(pLINTxBuff,0,LIN_TX_MAXSIZE);
+//    memset(pLINTxBuff,0,LIN_TX_MAXSIZE);
     DisplayCharacter(FOURTH_LINE + 4,signal,3);
     if (signal == EXV_RESP_OK)
     {
@@ -317,6 +317,7 @@ void LIN_Data_Process()
         EXV_Run_Step = (pLINRxBuff[6] << 8) | pLINRxBuff[5];
         if(EXV_Run_Step == EXV_Test_Step)
         {
+            DisplayCharacter(THIRD_LINE + 5,EXV_Run_Step,3);
             Feedback_Signal(EXV_RESP_OK);
         }
     }

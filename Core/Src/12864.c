@@ -83,11 +83,11 @@ void WRCommand_M68(uint8_t comm)
     LCD_RS_L;
     LCD_WR_L;
     PORT_Assignment(comm);
-    HAL_Delay(5);
+    ms_Delay(5);
     LCD_E_H;
-    HAL_Delay(5);
+    ms_Delay(5);
     LCD_E_L;
-    HAL_Delay(5);
+    ms_Delay(5);
 }
 
 //写数据到数据寄存器
@@ -96,11 +96,11 @@ void WRData_M68(uint8_t TEMP)
     LCD_RS_H;
     LCD_WR_L;
     PORT_Assignment(TEMP);
-    HAL_Delay(5);
+    ms_Delay(5);
     LCD_E_H;
-    HAL_Delay(5);
+    ms_Delay(5);
     LCD_E_L;
-    HAL_Delay(5);
+    ms_Delay(5);
 }
 
 //addr为汉字显示位置,*character汉字指针;count为输入汉字串字符数
@@ -108,11 +108,11 @@ void DisplayChineseCharacter(uint8_t addr,uint8_t *character,uint8_t count)
 {
     uint8_t i;
     WRCommand_M68(addr);	//设定DDRAM地址
-    HAL_Delay(5);
+    ms_Delay(5);
     for(i = 0;i < count;i++)
     {
         WRData_M68(*(character + i));
-        HAL_Delay(5);
+        ms_Delay(5);
     }
 }
 
@@ -130,10 +130,10 @@ void DisplayCharacter(uint8_t addr,uint16_t character,uint8_t count)
          num[index--] = digital;
     }
     WRCommand_M68(addr);	//设定DDRAM地址
-    HAL_Delay(5);
+    ms_Delay(5);
     for (int j = 8 - count; j < 8; ++j) {
         WRData_M68(0x30 + num[j]);
-        HAL_Delay(5);
+        ms_Delay(5);
     }
 }
 

@@ -46,10 +46,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t test_step = 0;
-uint16_t test_cycle = 0;
-uint8_t test_current_step = 0;
-uint16_t test_error = 900;
+//uint8_t test_step = 0;
+//uint16_t test_cycle = 0;
+//uint8_t test_current_step = 0;
+//uint16_t test_error = 900;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -248,6 +248,18 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
         Util_Receive_IT(huart);
         huart->ErrorCode = HAL_UART_ERROR_NONE;
     }
+}
+
+/**
+ * 不推荐在中断里使用延时函数
+ * 在实际应用中发现，在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题（与SysTick中断的优先级），故采用while(t--)代替延时函数
+ * 12864显示屏的写操作中使用了HAL_Delay(Delay)函数，导致程序卡在延时函数无法跳出来
+ * @param t_ms
+ */
+void ms_Delay(uint16_t t_ms)
+{
+    uint32_t t = t_ms * 3127;
+    while (t--);
 }
 /* USER CODE END 4 */
 
