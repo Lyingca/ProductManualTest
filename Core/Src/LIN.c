@@ -37,15 +37,19 @@ struct LIN_Chip_Msg
     uint8_t EXV_Not_Init_Request;
 };
 //初始化LIN芯片信息
-struct LIN_Chip_Msg chip[3] = {
-        {LIN_PID_53_0x35,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
-        {LIN_PID_55_0x37,LIN_PID_54_0x36,0xFF,0xFD,0xFC},
-        {LIN_PID_32_0x20,LIN_PID_16_0x10,0xFF,0xFD,0xFC}
+struct LIN_Chip_Msg chip[] = {
+        {LIN_PID_01_0x01,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
+        {LIN_PID_02_0x02,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
+        {LIN_PID_03_0x03,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
+        {LIN_PID_04_0x04,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
+        {LIN_PID_05_0x05,LIN_PID_52_0x34,0xFF,0xFD,0xFC}
 };
 //芯片编号
 uint8_t chip_Num = 0;
 //无限循环的标志位
 uint8_t InfiniteLoop = 0;
+//电子膨胀阀达到目标步数的计数值
+uint8_t EXV_Finished_Count = 0;
 
 /****************************************************************************************
 ** 函数名称: LINCheckSum----标准校验
@@ -176,8 +180,14 @@ void Send_LIN_Data()
     }
     if(LIN_Read_Flag)
     {
+        //根据芯片数组定义的顺序循环发送对应芯片读指令
         LIN_Tx_PID(&huart2, chip[chip_Num].read_PID);
-        HAL_Delay(20);
+        HAL_Delay(100);
+        chip_Num++;
+        if(chip_Num == 5)
+        {
+            chip_Num = 0;
+        }
     }
 }
 
@@ -219,7 +229,6 @@ void Feedback_Signal(uint16_t signal)
     {
         EXV_Loop_Execution(EXV_Test_Cycles,EXV_Test_Step,currentStepSize);
     }
-
 }
 
 /**
@@ -241,6 +250,33 @@ uint8_t Check_Chip_Connection()
         }
     }
     return 1;
+}
+
+/*
+ * 统计运行到目标步数的电子膨胀阀数量
+ */
+void CollectCompleteEXVNum()
+{
+    if(pLINRxBuff[2] == LIN_PID_01_0x01)
+    {
+        EXV_Finished_Count |= 0x01;
+    }
+    else if(pLINRxBuff[2] == LIN_PID_02_0x02)
+    {
+        EXV_Finished_Count |= 0x02;
+    }
+    else if(pLINRxBuff[2] == LIN_PID_03_0x03)
+    {
+        EXV_Finished_Count |= 0x04;
+    }
+    else if(pLINRxBuff[2] == LIN_PID_04_0x04)
+    {
+        EXV_Finished_Count |= 0x08;
+    }
+    else if(pLINRxBuff[2] == LIN_PID_05_0x05)
+    {
+        EXV_Finished_Count |= 0x10;
+    }
 }
 
 /**
@@ -321,8 +357,13 @@ void LIN_Data_Process()
         EXV_Run_Step = (pLINRxBuff[6] << 8) | pLINRxBuff[5];
         if(EXV_Run_Step == EXV_Test_Step)
         {
-            DisplayCharacter(THIRD_LINE + 5,EXV_Run_Step,3);
-            Feedback_Signal(EXV_RESP_OK);
+            CollectCompleteEXVNum();
+            DisplayCharacter(THIRD_LINE + 5,EXV_Finished_Count,3);
+            if(EXV_Finished_Count == 0x1F)
+            {
+                Feedback_Signal(EXV_RESP_OK);
+                EXV_Finished_Count = 0;
+            }
         }
     }
     else
