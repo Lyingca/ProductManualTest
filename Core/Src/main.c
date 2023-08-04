@@ -133,6 +133,14 @@ int main(void)
     //检测开始按钮
     if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
     {
+        if (currentCycleCount == 61000)
+        {
+            InfiniteLoop = 1;
+        }
+        else
+        {
+            InfiniteLoop = 0;
+        }
         Data_To_LIN(currentStepSize,currentCycleCount,0);
     }
     //检测结束按钮

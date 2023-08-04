@@ -44,6 +44,8 @@ struct LIN_Chip_Msg chip[3] = {
 };
 //芯片编号
 uint8_t chip_Num = 0;
+//无限循环的标志位
+uint8_t InfiniteLoop = 0;
 
 /****************************************************************************************
 ** 函数名称: LINCheckSum----标准校验
@@ -190,8 +192,10 @@ void EXV_Loop_Execution(uint16_t cycles,uint16_t test_step,uint16_t reset_step)
         if (test_step == reset_step)
         {
             step = 0;
-//            cycles--;
-            currentCycleCount--;
+            if (!InfiniteLoop)
+            {
+                currentCycleCount--;
+            }
             DisplayCharacter(SECOND_LINE + 5,currentCycleCount,5);
         }
         else

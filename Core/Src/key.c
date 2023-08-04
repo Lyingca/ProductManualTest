@@ -77,7 +77,10 @@ void Update_Data(uint8_t step, uint8_t step_loop)
             {
                 currentStepSize = 999;
             }
-            --currentStepSize;
+            else
+            {
+                --currentStepSize;
+            }
         }
         DisplayCharacter(FIRST_LINE + 5,currentStepSize,3);
     }
@@ -85,11 +88,22 @@ void Update_Data(uint8_t step, uint8_t step_loop)
     {
         if (step)
         {
-            ++currentCycleCount;
+            if(currentCycleCount == 65000)
+            {
+                currentCycleCount = 0;
+            }
+            currentCycleCount += 100;
         }
         else
         {
-            --currentCycleCount;
+            if (currentCycleCount == 0)
+            {
+                currentCycleCount = 65000;
+            }
+            else
+            {
+                currentCycleCount -= 100;
+            }
         }
         DisplayCharacter(SECOND_LINE + 5,currentCycleCount,5);
     }

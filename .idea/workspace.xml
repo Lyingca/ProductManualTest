@@ -20,11 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="调整代码，改为12864液晶显示屏显示数据">
+    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Inc/LIN.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/LIN.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/12864.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/12864.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/LIN.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/LIN.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/key.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/key.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
@@ -158,7 +156,14 @@
       <workItem from="1689840660987" duration="14412000" />
       <workItem from="1689984916144" duration="35000" />
       <workItem from="1690098840856" duration="1312000" />
-      <workItem from="1690501497919" duration="1000" />
+      <workItem from="1690501497919" duration="275000" />
+      <workItem from="1690609019666" duration="1963000" />
+      <workItem from="1690682910068" duration="594000" />
+      <workItem from="1690760273311" duration="8480000" />
+      <workItem from="1690807547669" duration="908000" />
+      <workItem from="1691025439404" duration="5121000" />
+      <workItem from="1691065010061" duration="29000" />
+      <workItem from="1691107193229" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <created>1683159408102</created>
@@ -230,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689065319408</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时">
+      <created>1690501736420</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1690501736420</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,22 +287,7 @@
     <MESSAGE value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart)调用的位置" />
     <MESSAGE value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart调用的位置，会导致程序异常，恢复Util_Receive_IT(huart)的位置" />
     <MESSAGE value="调整代码，改为12864液晶显示屏显示数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="调整代码，改为12864液晶显示屏显示数据" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Core/Src/LIN.c</url>
-          <line>213</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Core/Src/main.c</url>
-          <line>227</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时" />
   </component>
 </project>
