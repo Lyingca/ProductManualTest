@@ -22,10 +22,18 @@
   <component name="ChangeListManager">
     <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/LIN.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/LIN.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/LIN.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/LIN.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/key.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/key.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeASMCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeASMCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +63,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="f42fc6ceed41314109718613f0a12f7153247423" />
+        <entry key="$PROJECT_DIR$" value="1_Drive_5" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,13 +86,13 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/JetBrains/CLionProjects/ProductManualTest&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JetBrains/CLionProjects/HanAng_BetaBox&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -164,6 +172,30 @@
       <workItem from="1691025439404" duration="5121000" />
       <workItem from="1691065010061" duration="29000" />
       <workItem from="1691107193229" duration="1000" />
+      <workItem from="1697440342887" duration="2983000" />
+      <workItem from="1697454384764" duration="171000" />
+      <workItem from="1697454588761" duration="77000" />
+      <workItem from="1697502944471" duration="6816000" />
+      <workItem from="1697604523657" duration="72000" />
+      <workItem from="1697618789348" duration="247000" />
+      <workItem from="1698039498852" duration="988000" />
+      <workItem from="1698045453645" duration="63000" />
+      <workItem from="1698051141426" duration="1772000" />
+      <workItem from="1698136189051" duration="1109000" />
+      <workItem from="1699443686147" duration="25000" />
+      <workItem from="1702522087344" duration="1168000" />
+      <workItem from="1702543697217" duration="43000" />
+      <workItem from="1702602421559" duration="32000" />
+      <workItem from="1703053913415" duration="65000" />
+      <workItem from="1703056871461" duration="2085000" />
+      <workItem from="1703828401191" duration="145000" />
+      <workItem from="1704856197930" duration="210000" />
+      <workItem from="1705363782770" duration="79000" />
+      <workItem from="1705366801938" duration="3280000" />
+      <workItem from="1708498664628" duration="77000" />
+      <workItem from="1710894603050" duration="111000" />
+      <workItem from="1713333845109" duration="25000" />
+      <workItem from="1713353893145" duration="30000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <created>1683159408102</created>
