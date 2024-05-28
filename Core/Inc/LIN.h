@@ -20,6 +20,9 @@
 
 extern uint8_t pLINRxBuff[LIN_RX_MAXSIZE];
 extern uint8_t InfiniteLoop;
+extern uint8_t chip_Num;
+extern uint8_t LIN_Read_Flag;
+extern uint8_t LIN_Send_Flag;
 
 //LIN校验模式
 typedef enum
@@ -172,9 +175,9 @@ typedef enum
     EXV_RESP_CHIP_ERROR = 0x38E
 }EXV_Resp_Rsult;
 
-void Data_To_LIN(uint16_t step,uint16_t cycles,uint8_t init_enable);
+void Data_To_LIN(uint16_t step,uint8_t init_enable);
 void Finished_LIN(uint8_t send,uint8_t read);
 void Send_LIN_Data();
-void LIN_Data_Process();
+void LIN_Data_Process(uint8_t RxLength);
 
 #endif //PRODUCTMANUALTEST_LIN_H

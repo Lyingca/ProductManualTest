@@ -20,20 +20,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时">
+    <list default="true" id="c56645e7-aece-4bf0-bdb0-81a754f82f31" name="Changes" comment="1.增加自研的LIN-ID号（19-29）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/12864.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/12864.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/LIN.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/LIN.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/key.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/key.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/12864.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/12864.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/LIN.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/LIN.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeASMCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeASMCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/key.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/key.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/stm32g0xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32g0xx_it.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +60,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="1_Drive_5" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -196,6 +193,9 @@
       <workItem from="1710894603050" duration="111000" />
       <workItem from="1713333845109" duration="25000" />
       <workItem from="1713353893145" duration="30000" />
+      <workItem from="1716707279849" duration="8238000" />
+      <workItem from="1716805200491" duration="2193000" />
+      <workItem from="1716878798006" duration="6000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <created>1683159408102</created>
@@ -274,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690501736420</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="1.增加自研的LIN-ID号（19-29）">
+      <created>1716707448089</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716707448089</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,6 +327,7 @@
     <MESSAGE value="修改HAL_UART_ErrorCallback方法中Util_Receive_IT(huart调用的位置，会导致程序异常，恢复Util_Receive_IT(huart)的位置" />
     <MESSAGE value="调整代码，改为12864液晶显示屏显示数据" />
     <MESSAGE value="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.设置循环次数后，开始动作，完成一次循环，循环次数会减一&#10;2.在STM32的中断里使用延时函数HAL_Delay(Delay)容易出现问题，所以是通过循环让MCU执行空操作来达到延时" />
+    <MESSAGE value="1.增加自研的LIN-ID号（19-29）" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.增加自研的LIN-ID号（19-29）" />
   </component>
 </project>

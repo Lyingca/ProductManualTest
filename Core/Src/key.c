@@ -65,24 +65,24 @@ void Update_Data(uint8_t step, uint8_t step_loop)
     {
         if (step)
         {
-            if (currentStepSize == 999)
+            if (chip_Num == 2)
             {
-                currentStepSize = 0;
+                chip_Num = 0;
             }
-            ++currentStepSize;
+            ++chip_Num;
         }
         else
         {
-            if (currentStepSize == 0)
+            if (chip_Num == 0)
             {
-                currentStepSize = 999;
+                chip_Num = 2;
             }
             else
             {
-                --currentStepSize;
+                --chip_Num;
             }
         }
-        DisplayCharacter(FIRST_LINE + 5,currentStepSize,3);
+        DisplayCharacter(SECOND_LINE + 7,chip_Num,2);
     }
     if (step_loop == LOOP_DIGITAL)
     {

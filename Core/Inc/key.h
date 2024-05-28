@@ -7,6 +7,7 @@
 
 #include "main.h"
 #include "12864.h"
+#include "LIN.h"
 
 /** 按键按下标置宏
  * 按键按下为高电平，设置 KEY_ON=1， KEY_OFF=0

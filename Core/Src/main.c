@@ -46,16 +46,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-//uint8_t test_step = 0;
-//uint16_t test_cycle = 0;
-//uint8_t test_current_step = 0;
-//uint16_t test_error = 900;
+uint8_t RevByte = 0;
+uint8_t pRevByte = 0;
+uint8_t RxFlag = 0;
+uint8_t RxLength = 0;
+uint8_t ResetFlag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void Util_Receive_IT(UART_HandleTypeDef *huart);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -96,21 +97,21 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  //开启中断接收
-  Util_Receive_IT(&huart2);
-  //使能系统运行指示灯
-  HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
-  //使能TJA1028LIN芯片的EN
-  HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port,TJA1028_EN_Pin,GPIO_PIN_SET);
-  //使能TJA1028LIN芯片的RSTN
-  HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port,TJA1028_RSTN_Pin,GPIO_PIN_SET);
-  LCDInit();
-
-  //测试
-//  currentStepSize = 480;
-//  currentCycleCount = 300;
-//  Data_To_LIN(currentStepSize,currentCycleCount,0);
-  //测试
+    //一定要先清除串口空闲中断，然后在打开串口空闲中断，因为串口初始化完成后会自动将IDLE置位，
+    // 导致还没有接受数据就进入到中断里面去了，所以打开IDLE之前，先把它清楚掉
+    //清除串口空闲中断
+    __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+    //打开串口空闲中断
+    __HAL_UART_ENABLE_IT(&huart2,UART_IT_IDLE);
+    //开启中断接收
+    Util_Receive_IT(&huart2);
+    //使能系统运行指示灯
+    HAL_GPIO_WritePin(LED_System_GPIO_Port,LED_System_Pin,GPIO_PIN_SET);
+    //使能TJA1028LIN芯片的EN
+    HAL_GPIO_WritePin(TJA1028_EN_GPIO_Port,TJA1028_EN_Pin,GPIO_PIN_SET);
+    //使能TJA1028LIN芯片的RSTN
+    HAL_GPIO_WritePin(TJA1028_RSTN_GPIO_Port,TJA1028_RSTN_Pin,GPIO_PIN_SET);
+    LCDInit();
 
   /* USER CODE END 2 */
 
@@ -123,43 +124,26 @@ int main(void)
     //检测加减按键
     Operation_Key_Scan(Step_Add_GPIO_Port,Step_Add_Pin,1,STEP_DIGITAL);
     Operation_Key_Scan(Step_Sub_GPIO_Port,Step_Sub_Pin,0,STEP_DIGITAL);
-    Operation_Key_Scan(Loop_Add_GPIO_Port,Loop_Add_Pin,1,LOOP_DIGITAL);
-    Operation_Key_Scan(Loop_Sub_GPIO_Port,Loop_Sub_Pin,0,LOOP_DIGITAL);
-    //检测初始化按钮
-    if (General_Key_Scan(Init_Key_GPIO_Port,Init_Key_Pin))
-    {
-        Data_To_LIN(0,0,1);
-    }
     //检测开始按钮
     if (General_Key_Scan(Start_Key_GPIO_Port,Start_Key_Pin))
     {
-        if (currentCycleCount == 61000)
-        {
-            InfiniteLoop = 1;
-        }
-        else
-        {
-            InfiniteLoop = 0;
-        }
-        Data_To_LIN(currentStepSize,currentCycleCount,0);
+        Data_To_LIN(480,0);
+        LIN_Send_Flag = ENABLE;
+        LIN_Read_Flag = ENABLE;
     }
     //检测结束按钮
     if (General_Key_Scan(Finished_Key_GPIO_Port,Finished_Key_Pin))
     {
         Finished_LIN(DISABLE,DISABLE);
     }
-    //循环发送数据
-    Send_LIN_Data();
 
-    //测试代码-start
-//    test_step++;
-//    test_cycle++;
-//    test_current_step++;
-//    DisplayCharacter(FIRST_LINE + 5,test_step,3);
-//    DisplayCharacter(SECOND_LINE + 5,test_cycle,5);
-//    DisplayCharacter(THIRD_LINE + 5,test_current_step,3);
-//    DisplayCharacter(FOURTH_LINE + 5,test_error,3);
-    //测试代码-end
+      //循环发送数据
+      Send_LIN_Data();
+      if (RxFlag)
+      {
+          LIN_Data_Process(RxLength);
+          RxFlag = 0;
+      }
 
     /* USER CODE BEGIN 3 */
   }
@@ -214,7 +198,7 @@ void Util_Receive_IT(UART_HandleTypeDef *huart)
 {
     if(huart == &huart2)
     {
-        if(HAL_UART_Receive_IT(huart, pLINRxBuff, LIN_RX_MAXSIZE) != HAL_OK)
+        if(HAL_UART_Receive_IT(huart, &RevByte, 1) != HAL_OK)
         {
             Error_Handler();
         }
@@ -230,12 +214,28 @@ void Util_Receive_IT(UART_HandleTypeDef *huart)
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    //LIN协议
+    //LIN数据
     if(huart == &huart2)
     {
-        LIN_Data_Process();
+        pLINRxBuff[pRevByte] = RevByte;
+        pRevByte++;
     }
     Util_Receive_IT(huart);
+}
+
+//串口空闲中断
+void UART_IDLECallBack(UART_HandleTypeDef *huart)
+{
+    if(huart == &huart2)
+    {
+        if((__HAL_UART_GET_FLAG(huart,UART_FLAG_IDLE) != RESET))
+        {
+            __HAL_UART_CLEAR_IDLEFLAG(&huart2);//清除标志位
+            RxFlag = 1;
+            RxLength = pRevByte;
+            pRevByte = 0;
+        }
+    }
 }
 
 /**
