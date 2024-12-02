@@ -262,7 +262,7 @@ void LIN_Data_Process()
         Feedback_Signal(EXV_RESP_CHIP_ERROR);
     }
     //如果校验不通过，丢弃这帧数据
-    else if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == LIN_PID_52_0x34)
+    else if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == chip[chip_Num].write_PID)
     {
         //不需要操作
     }
