@@ -37,11 +37,12 @@ struct LIN_Chip_Msg
     uint8_t EXV_Not_Init_Request;
 };
 //初始化LIN芯片信息
-struct LIN_Chip_Msg chip[4] = {
+struct LIN_Chip_Msg chip[5] = {
         {LIN_PID_53_0x35,LIN_PID_52_0x34,0xFF,0xFD,0xFC},
         {LIN_PID_55_0x37,LIN_PID_54_0x36,0xFF,0xFD,0xFC},
         {LIN_PID_32_0x20,LIN_PID_16_0x10,0xFF,0xFD,0xFC},
-        {LIN_PID_41_0x29,LIN_PID_25_0x19,0xFF,0xFD,0xFC}
+        {LIN_PID_41_0x29,LIN_PID_25_0x19,0xFF,0xFD,0xFC},
+        {LIN_PID_37_0x25,LIN_PID_36_0x24,0xFF,0xFD,0xFC}
 
 };
 //芯片编号
@@ -172,14 +173,15 @@ void Send_LIN_Data()
 {
     if(LIN_Send_Flag)
     {
+        pLINTxBuff[0] = chip[chip_Num].write_PID;
         LIN_Tx_PID_Data(&huart2,pLINTxBuff,LIN_TX_MAXSIZE - 1,LIN_CK_ENHANCED);
         LIN_Read_Flag = ENABLE;
-        HAL_Delay(20);
+        HAL_Delay(50);
     }
     if(LIN_Read_Flag)
     {
         LIN_Tx_PID(&huart2, chip[chip_Num].read_PID);
-        HAL_Delay(20);
+        HAL_Delay(50);
     }
 }
 
@@ -233,7 +235,7 @@ uint8_t Check_Chip_Connection()
     uint8_t i = 0, count = 0;
     for(i = 0;i < LIN_RX_MAXSIZE;i++)
     {
-        if (pLINRxBuff[i] == chip[chip_Num].read_PID)
+        if (pLINRxBuff[i] == chip[4].read_PID)
         {
             count++;
         }
@@ -248,7 +250,7 @@ uint8_t Check_Chip_Connection()
 /**
  * 数据处理函数
  */
-void LIN_Data_Process()
+void LIN_Data_Process(uint8_t RxLength)
 {
     //电机转动步长
     uint16_t EXV_Run_Step = 0;
@@ -257,12 +259,15 @@ void LIN_Data_Process()
     //pLINRxBuff + 2表示从接收的第3个数据开始，因为接收数组第1个是同步间隔段，第2个是同步段（0x55）
     ckm = LIN_Check_Sum_En(pLINRxBuff + 2,LIN_CHECK_EN_NUM);
     //检查电机与测试板之间的连接是否正常
-    if (!Check_Chip_Connection())
+    if(pLINRxBuff[2] == chip[4].read_PID && RxLength < LIN_RX_MAXSIZE)
     {
         Feedback_Signal(EXV_RESP_CHIP_ERROR);
     }
     //如果校验不通过，丢弃这帧数据
-    else if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == chip[chip_Num].write_PID)
+    else if(ckm != pLINRxBuff[LIN_RX_MAXSIZE - 1] || pLINRxBuff[2] == chip[0].write_PID || pLINRxBuff[2] == chip[1].write_PID ||
+            pLINRxBuff[2] == chip[2].write_PID || pLINRxBuff[2] == chip[3].write_PID || pLINRxBuff[2] == chip[4].write_PID ||
+            pLINRxBuff[2] == chip[0].read_PID || pLINRxBuff[2] == chip[1].read_PID || pLINRxBuff[2] == chip[2].read_PID ||
+            pLINRxBuff[2] == chip[3].read_PID)
     {
         //不需要操作
     }

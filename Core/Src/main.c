@@ -50,12 +50,16 @@
 //uint16_t test_cycle = 0;
 //uint8_t test_current_step = 0;
 //uint16_t test_error = 900;
+uint8_t RevByte = 0;
+uint8_t pRevByte = 0;
+uint8_t RxFlag = 0;
+uint8_t RxLength = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void Util_Receive_IT(UART_HandleTypeDef *huart);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -96,6 +100,12 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  //一定要先清除串口空闲中断，然后在打开串口空闲中断，因为串口初始化完成后会自动将IDLE置位，
+  // 导致还没有接受数据就进入到中断里面去了，所以打开IDLE之前，先把它清楚掉
+  //清除串口空闲中断
+  __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+  //打开串口空闲中断
+  __HAL_UART_ENABLE_IT(&huart2,UART_IT_IDLE);
   //开启中断接收
   Util_Receive_IT(&huart2);
   //使能系统运行指示灯
@@ -150,6 +160,16 @@ int main(void)
     }
     //循环发送数据
     Send_LIN_Data();
+    if (RxFlag)
+    {
+        LIN_Data_Process(RxLength);
+        RxFlag = 0;
+    }
+    chip_Num++;
+    if(chip_Num >= 5)
+    {
+        chip_Num = 0;
+    }
 
     //测试代码-start
 //    test_step++;
@@ -214,7 +234,7 @@ void Util_Receive_IT(UART_HandleTypeDef *huart)
 {
     if(huart == &huart2)
     {
-        if(HAL_UART_Receive_IT(huart, pLINRxBuff, LIN_RX_MAXSIZE) != HAL_OK)
+        if(HAL_UART_Receive_IT(huart, &RevByte, 1) != HAL_OK)
         {
             Error_Handler();
         }
@@ -233,9 +253,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     //LIN协议
     if(huart == &huart2)
     {
-        LIN_Data_Process();
+        pLINRxBuff[pRevByte] = RevByte;
+        pRevByte++;
     }
     Util_Receive_IT(huart);
+}
+
+//串口空闲中断
+void UART_IDLECallBack(UART_HandleTypeDef *huart)
+{
+    if(huart == &huart2)
+    {
+        if((__HAL_UART_GET_FLAG(huart,UART_FLAG_IDLE) != RESET))
+        {
+            __HAL_UART_CLEAR_IDLEFLAG(&huart2);//清除标志位
+            RxFlag = 1;
+            RxLength = pRevByte;
+            pRevByte = 0;
+        }
+    }
 }
 
 /**
